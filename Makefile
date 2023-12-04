@@ -12,11 +12,12 @@ SHELL = /usr/bin/env bash -o pipefail
 .SHELLFLAGS = -ec
 
 # make all WHAT=cmd/serviceA
+# make all
 all: fmt vet  ## Build binary.
 	hack/make-rules/build.sh $(WHAT)
 
 # make run WHAT=cmd/serviceA
-run: fmt vet ## Run a biz-splitting-tool from your host.
+run: fmt vet
 	go run $(WHAT)/main.go
 
 fmt: ## Run go fmt against code.
