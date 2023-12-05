@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicec-deployment
+  namespace: kubernetes-workshop
+  labels:
+    app: servicec
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: servicec
+  template:
+    metadata:
+      labels:
+        app: servicec
+    spec:
+      containers:
+        - name: servicec
+          image: duizhang/servicec
+          env:
+            - name: VERSION
+              value: "v1.0"
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: servicec-service
+  namespace: kubernetes-workshop
+spec:
+  selector:
+    app: servicec
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080

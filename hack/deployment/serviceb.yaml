@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviceb-deployment
+  namespace: kubernetes-workshop
+  labels:
+    app: serviceb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: serviceb
+  template:
+    metadata:
+      labels:
+        app: serviceb
+    spec:
+      containers:
+        - name: serviceb
+          image: duizhang/serviceb
+          env:
+            - name: VERSION
+              value: "v1.0"
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: serviceb-service
+  namespace: kubernetes-workshop
+spec:
+  selector:
+    app: serviceb
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080

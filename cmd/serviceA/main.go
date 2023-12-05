@@ -9,10 +9,11 @@ import (
 
 func main() {
 	h := handlers.KubernetesWorkshop{
-		ServiceTag: "serviceA",
+		ServiceName: "serviceA",
 	}
 	r := gin.Default()
 	r.GET("/info", h.Info)
+	r.GET("/service", h.GetInfoFromService)
 	if err := r.Run(); err != nil {
 		klog.Fatal(err)
 	}
