@@ -20,6 +20,9 @@ all: fmt vet  ## Build binary.
 run: fmt vet
 	go run $(WHAT)/main.go
 
+image:
+	docker build --build-arg WHAT=$(WHAT) -t $(FULL_IMAGE_NAME) .
+
 fmt: ## Run go fmt against code.
 	go fmt $(shell go list ./... | grep -v /vendor/)
 
