@@ -44,10 +44,12 @@ func (k *KubernetesWorkshop) GetInfoFromService(c *gin.Context) {
 		ForceContentType("application/json").
 		Get(fmt.Sprintf("%s/service", upStreamService))
 	if err != nil {
-		klog.Fatal(err)
+		klog.Error(err)
+		return
 	}
 	if err := json.Unmarshal(resp.Body(), entityList); err != nil {
-		klog.Fatal(err)
+		klog.Error(err)
+		return
 	}
 	*entityList = append(*entityList, localServiceInfo)
 	c.JSON(http.StatusOK, entityList)
