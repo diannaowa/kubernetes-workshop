@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: servicea
-          image: duizhang/servicea
+          image: duizhang/k8s-workshop-servicea
           env:
             - name: VERSION
               value: "v1.0"

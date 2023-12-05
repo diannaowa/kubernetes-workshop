@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: servicec
-          image: duizhang/servicec
+          image: duizhang/k8s-workshop-servicec
           env:
             - name: VERSION
               value: "v1.0"
