@@ -20,6 +20,7 @@ all: fmt vet  ## Build binary.
 run: fmt vet
 	go run $(WHAT)/main.go
 
+# make image WHAT=cmd/serviceA FULL_IMAGE_NAME=duizhang/servicea
 image:
 	docker build --build-arg WHAT=$(WHAT) -t $(FULL_IMAGE_NAME) .
 

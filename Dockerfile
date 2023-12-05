@@ -14,7 +14,7 @@ COPY pkg/ pkg/
 COPY vendor/ vendor/
 
 # Build
-RUN CGO_ENABLED=0 GO111MODULE=on go build -mod=vendor -a -o sample-service ./$WHAT/main.go
+RUN CGO_ENABLED=0 GO111MODULE=on go build -mod=vendor -a -o sample-service ./${WHAT}/main.go
 
 ARG BASE_IMAGE
 ARG BASE_IMAGE_VERSION
