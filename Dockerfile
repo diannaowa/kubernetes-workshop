@@ -3,6 +3,7 @@ ARG BASE_IMAGE=alpine
 ARG BASE_IMAGE_VERSION=3.18
 FROM golang:1.20-alpine3.18 as builder
 
+ARG WHAT
 WORKDIR /workspace
 # Copy the Go Modules manifests
 COPY go.mod go.mod
