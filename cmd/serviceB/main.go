@@ -14,7 +14,7 @@ func main() {
 	r := gin.Default()
 	r.GET("/info", h.Info)
 	r.GET("/service", h.GetInfoFromService)
-	if err := r.Run(":8081"); err != nil {
+	if err := r.Run(); err != nil {
 		klog.Fatal(err)
 	}
 }

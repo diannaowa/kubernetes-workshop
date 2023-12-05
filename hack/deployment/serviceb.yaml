@@ -21,6 +21,8 @@ spec:
           env:
             - name: VERSION
               value: "v1.0"
+            - name: UPSTREAM_SERVICE
+              value: "servicec-service:8080"
           ports:
             - containerPort: 8080
 ---
