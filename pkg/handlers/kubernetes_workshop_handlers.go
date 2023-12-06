@@ -26,7 +26,7 @@ type Entity struct {
 
 type KubernetesWorkshop struct {
 	ServiceName     string
-	MemoryBlackHole []byte
+	MemoryBlackHole []*[]byte
 	sync.Mutex
 }
 
@@ -44,7 +44,7 @@ func (k *KubernetesWorkshop) MemAlloc(c *gin.Context) {
 	return
 }
 func (k *KubernetesWorkshop) MemFree(c *gin.Context) {
-	k.MemoryBlackHole = make([]byte, 0)
+	k.MemoryBlackHole = make([]*[]byte, 0)
 	runtime.GC()
 	var rtm runtime.MemStats
 	runtime.ReadMemStats(&rtm)
@@ -94,6 +94,9 @@ func (k *KubernetesWorkshop) generateServiceInfo() *Entity {
 func (k *KubernetesWorkshop) memAlloc() {
 	k.Lock()
 	defer k.Unlock()
-	data := new([1024 * 1024]byte)
-	k.MemoryBlackHole = append(k.MemoryBlackHole, data[:]...)
+	var data [1024 * 1024]byte
+	klog.Infof("Debug call number......")
+	v := data[:]
+	k.MemoryBlackHole = append(k.MemoryBlackHole, &v)
+	klog.Infof("MemoryBlackHole len=%d", len(k.MemoryBlackHole))
 }

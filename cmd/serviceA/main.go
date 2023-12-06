@@ -10,7 +10,7 @@ import (
 func main() {
 	h := &handlers.KubernetesWorkshop{
 		ServiceName:     "serviceA",
-		MemoryBlackHole: make([]byte, 0),
+		MemoryBlackHole: make([]*[]byte, 0),
 	}
 
 	r := gin.Default()
