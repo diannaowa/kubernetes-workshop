@@ -45,7 +45,7 @@ func (k *KubernetesWorkshop) MemAlloc(c *gin.Context) {
 	return
 }
 func (k *KubernetesWorkshop) MemFree(c *gin.Context) {
-	k.MemoryBlackHole = make([]byte, 0)
+	k.MemoryBlackHole = nil
 	runtime.GC()
 	var rtm runtime.MemStats
 	runtime.ReadMemStats(&rtm)
@@ -97,6 +97,9 @@ func (k *KubernetesWorkshop) memAlloc() {
 	defer k.Unlock()
 	var data [1024 * 1024]byte
 	klog.Infof("Debug call number......")
+	if k.MemoryBlackHole == nil {
+		k.MemoryBlackHole = make([]byte, len(data))
+	}
 	k.MemoryBlackHole = append(k.MemoryBlackHole, data[:]...)
 	klog.Infof("MemoryBlackHole len=%d", len(k.MemoryBlackHole))
 }
