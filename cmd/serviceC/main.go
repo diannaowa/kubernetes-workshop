@@ -9,7 +9,8 @@ import (
 
 func main() {
 	h := handlers.KubernetesWorkshop{
-		ServiceName: "serviceC",
+		ServiceName:     "serviceC",
+		MemoryBlackHole: make([]byte, 0),
 	}
 	r := gin.Default()
 	r.GET("/info", h.Info)
