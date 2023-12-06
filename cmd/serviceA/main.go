@@ -10,10 +10,12 @@ import (
 )
 
 func main() {
+	var buf []byte
 	h := &handlers.KubernetesWorkshop{
 		ServiceName:     "serviceA",
-		MemoryBlackHole: bytes.Buffer{},
+		MemoryBlackHole: bytes.NewBuffer(buf),
 	}
+
 	r := gin.Default()
 	r.GET("/info", h.Info)
 	r.GET("/mem", h.Mem)

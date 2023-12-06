@@ -26,7 +26,7 @@ type Entity struct {
 
 type KubernetesWorkshop struct {
 	ServiceName     string
-	MemoryBlackHole bytes.Buffer
+	MemoryBlackHole *bytes.Buffer
 }
 
 func (k *KubernetesWorkshop) Info(c *gin.Context) {
@@ -35,9 +35,8 @@ func (k *KubernetesWorkshop) Info(c *gin.Context) {
 }
 
 func (k *KubernetesWorkshop) Mem(c *gin.Context) {
-	// 10M
-	for i := 0; i < 10*128*1024; i++ {
-		k.MemoryBlackHole.WriteString("workshop")
+	for i := 0; i < 1*128*1024; i++ {
+		k.MemoryBlackHole.WriteByte(byte(100))
 	}
 	var rtm runtime.MemStats
 	runtime.ReadMemStats(&rtm)
