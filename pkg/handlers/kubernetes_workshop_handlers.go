@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -26,7 +25,7 @@ type Entity struct {
 
 type KubernetesWorkshop struct {
 	ServiceName     string
-	MemoryBlackHole *bytes.Buffer
+	MemoryBlackHole []byte
 }
 
 func (k *KubernetesWorkshop) Info(c *gin.Context) {
@@ -36,7 +35,7 @@ func (k *KubernetesWorkshop) Info(c *gin.Context) {
 
 func (k *KubernetesWorkshop) MemAlloc(c *gin.Context) {
 	var data [1024 * 1024]byte
-	k.MemoryBlackHole.Write(data[:])
+	k.MemoryBlackHole = append(k.MemoryBlackHole, data[:]...)
 	var rtm runtime.MemStats
 	runtime.ReadMemStats(&rtm)
 	//
@@ -44,7 +43,7 @@ func (k *KubernetesWorkshop) MemAlloc(c *gin.Context) {
 	return
 }
 func (k *KubernetesWorkshop) MemFree(c *gin.Context) {
-	k.MemoryBlackHole.Reset()
+	k.MemoryBlackHole = make([]byte, 0)
 	runtime.GC()
 	var rtm runtime.MemStats
 	runtime.ReadMemStats(&rtm)
