@@ -24,7 +24,7 @@
 ├── init-kubernetes.md # kubernetes集群setup相关的说明
 ├── LICENSE
 ├── Makefile
-├── pkg # 样例服务的核心代码目录
+├── pkg # 服务的核心代码目录
 │   └── handlers
 │       └── kubernetes_workshop_handlers.go
 ├── README.md

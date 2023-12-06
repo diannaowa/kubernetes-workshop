@@ -7,8 +7,6 @@ kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
 
-
-
 ## 二、安装calico
 
 安装官方文档安装即可：`https://docs.tigera.io/calico/latest/getting-started/kubernetes/quickstart`
