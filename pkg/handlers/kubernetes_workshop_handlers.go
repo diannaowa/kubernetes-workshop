@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"runtime"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-resty/resty/v2"
@@ -26,6 +27,7 @@ type Entity struct {
 type KubernetesWorkshop struct {
 	ServiceName     string
 	MemoryBlackHole []byte
+	sync.Mutex
 }
 
 func (k *KubernetesWorkshop) Info(c *gin.Context) {
@@ -34,8 +36,7 @@ func (k *KubernetesWorkshop) Info(c *gin.Context) {
 }
 
 func (k *KubernetesWorkshop) MemAlloc(c *gin.Context) {
-	var data [1024 * 1024]byte
-	k.MemoryBlackHole = append(k.MemoryBlackHole, data[:]...)
+	k.memAlloc()
 	var rtm runtime.MemStats
 	runtime.ReadMemStats(&rtm)
 	//
@@ -48,7 +49,7 @@ func (k *KubernetesWorkshop) MemFree(c *gin.Context) {
 	var rtm runtime.MemStats
 	runtime.ReadMemStats(&rtm)
 	//
-	c.JSON(http.StatusOK, gin.H{"Alloc": float64(rtm.Alloc) / 1024. / 1024.})
+	c.JSON(http.StatusOK, gin.H{"Alloc": float64(rtm.Alloc) / 1024. / 1024., "os": float64(rtm.Sys) / 1024. / 1024.})
 	return
 }
 
@@ -88,4 +89,11 @@ func (k *KubernetesWorkshop) generateServiceInfo() *Entity {
 		Version:     version,
 	}
 	return entity
+}
+
+func (k *KubernetesWorkshop) memAlloc() {
+	k.Lock()
+	defer k.Unlock()
+	var data [1024 * 1024]byte
+	k.MemoryBlackHole = append(k.MemoryBlackHole, data[:]...)
 }
