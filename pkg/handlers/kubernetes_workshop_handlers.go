@@ -34,9 +34,17 @@ func (k *KubernetesWorkshop) Info(c *gin.Context) {
 	c.JSON(http.StatusOK, entity)
 }
 
-func (k *KubernetesWorkshop) Mem(c *gin.Context) {
+func (k *KubernetesWorkshop) MemAlloc(c *gin.Context) {
 	var data [1024 * 1024]byte
 	k.MemoryBlackHole.Write(data[:])
+	var rtm runtime.MemStats
+	runtime.ReadMemStats(&rtm)
+	//
+	c.JSON(http.StatusOK, gin.H{"Alloc": float64(rtm.Alloc) / 1024. / 1024.})
+	return
+}
+func (k *KubernetesWorkshop) MemFree(c *gin.Context) {
+	k.MemoryBlackHole.Reset()
 	var rtm runtime.MemStats
 	runtime.ReadMemStats(&rtm)
 	//

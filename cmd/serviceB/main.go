@@ -13,6 +13,8 @@ func main() {
 	}
 	r := gin.Default()
 	r.GET("/info", h.Info)
+	r.GET("/mem", h.MemAlloc)
+	r.GET("/free", h.MemFree)
 	r.GET("/service", h.GetInfoFromService)
 	if err := r.Run(); err != nil {
 		klog.Fatal(err)
