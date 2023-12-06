@@ -35,9 +35,8 @@ func (k *KubernetesWorkshop) Info(c *gin.Context) {
 }
 
 func (k *KubernetesWorkshop) Mem(c *gin.Context) {
-	for i := 0; i < 1*128*1024; i++ {
-		k.MemoryBlackHole.WriteByte(byte(100))
-	}
+	var data [1024 * 1024]byte
+	k.MemoryBlackHole.Write(data[:])
 	var rtm runtime.MemStats
 	runtime.ReadMemStats(&rtm)
 	//
