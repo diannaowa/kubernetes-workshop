@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+
 	"github.com/gin-gonic/gin"
 	"k8s.io/klog"
 
@@ -10,7 +12,7 @@ import (
 func main() {
 	h := &handlers.KubernetesWorkshop{
 		ServiceName:     "serviceA",
-		MemoryBlackHole: make([]byte, 0),
+		MemoryBlackHole: bytes.Buffer{},
 	}
 	r := gin.Default()
 	r.GET("/info", h.Info)

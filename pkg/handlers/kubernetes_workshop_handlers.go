@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"encoding/binary"
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -26,7 +26,7 @@ type Entity struct {
 
 type KubernetesWorkshop struct {
 	ServiceName     string
-	MemoryBlackHole []byte
+	MemoryBlackHole bytes.Buffer
 }
 
 func (k *KubernetesWorkshop) Info(c *gin.Context) {
@@ -37,8 +37,7 @@ func (k *KubernetesWorkshop) Info(c *gin.Context) {
 func (k *KubernetesWorkshop) Mem(c *gin.Context) {
 	// 10M
 	for i := 0; i < 10*128*1024; i++ {
-		v := uint64(100)
-		k.MemoryBlackHole = binary.BigEndian.AppendUint64(k.MemoryBlackHole, v)
+		k.MemoryBlackHole.WriteString("workshop")
 	}
 	var rtm runtime.MemStats
 	runtime.ReadMemStats(&rtm)
