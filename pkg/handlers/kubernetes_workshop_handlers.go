@@ -45,6 +45,7 @@ func (k *KubernetesWorkshop) MemAlloc(c *gin.Context) {
 }
 func (k *KubernetesWorkshop) MemFree(c *gin.Context) {
 	k.MemoryBlackHole.Reset()
+	runtime.GC()
 	var rtm runtime.MemStats
 	runtime.ReadMemStats(&rtm)
 	//
