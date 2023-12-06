@@ -40,7 +40,7 @@ func (k *KubernetesWorkshop) MemAlloc(c *gin.Context) {
 	var rtm runtime.MemStats
 	runtime.ReadMemStats(&rtm)
 	//
-	c.JSON(http.StatusOK, gin.H{"Alloc": float64(rtm.Alloc) / 1024. / 1024.})
+	c.JSON(http.StatusOK, gin.H{"Alloc": float64(rtm.Alloc) / 1024. / 1024., "os": float64(rtm.Sys) / 1024. / 1024.})
 	return
 }
 func (k *KubernetesWorkshop) MemFree(c *gin.Context) {
