@@ -94,6 +94,6 @@ func (k *KubernetesWorkshop) generateServiceInfo() *Entity {
 func (k *KubernetesWorkshop) memAlloc() {
 	k.Lock()
 	defer k.Unlock()
-	var data [1024 * 1024]byte
+	data := new([1024 * 1024]byte)
 	k.MemoryBlackHole = append(k.MemoryBlackHole, data[:]...)
 }
