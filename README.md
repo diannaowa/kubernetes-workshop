@@ -1,4 +1,7 @@
 # kubernetes-workshop
+
+这是一个Golang工程，包含三个service组件。用在kuberetes workshop中。
+
 ### 1，目录介绍
 
 ```bash

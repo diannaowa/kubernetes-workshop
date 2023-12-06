@@ -8,11 +8,13 @@ import (
 )
 
 func main() {
-	h := handlers.KubernetesWorkshop{
-		ServiceName: "serviceA",
+	h := &handlers.KubernetesWorkshop{
+		ServiceName:     "serviceA",
+		MemoryBlackHole: make([]byte, 0),
 	}
 	r := gin.Default()
 	r.GET("/info", h.Info)
+	r.GET("/mem", h.Mem)
 	r.GET("/service", h.GetInfoFromService)
 	if err := r.Run(); err != nil {
 		klog.Fatal(err)

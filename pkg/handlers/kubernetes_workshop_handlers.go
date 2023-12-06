@@ -1,10 +1,12 @@
 package handlers
 
 import (
+	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
+	"runtime"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-resty/resty/v2"
@@ -23,12 +25,26 @@ type Entity struct {
 }
 
 type KubernetesWorkshop struct {
-	ServiceName string
+	ServiceName     string
+	MemoryBlackHole []byte
 }
 
 func (k *KubernetesWorkshop) Info(c *gin.Context) {
 	entity := k.generateServiceInfo()
 	c.JSON(http.StatusOK, entity)
+}
+
+func (k *KubernetesWorkshop) Mem(c *gin.Context) {
+	// 10M
+	for i := 0; i < 10*128*1024; i++ {
+		v := uint64(100)
+		k.MemoryBlackHole = binary.BigEndian.AppendUint64(k.MemoryBlackHole, v)
+	}
+	var rtm runtime.MemStats
+	runtime.ReadMemStats(&rtm)
+	//
+	c.JSON(http.StatusOK, gin.H{"Alloc": float64(rtm.Alloc) / 1024. / 1024.})
+	return
 }
 
 func (k *KubernetesWorkshop) GetInfoFromService(c *gin.Context) {
