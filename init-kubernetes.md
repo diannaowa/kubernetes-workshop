@@ -162,7 +162,7 @@ vm-0-7-ubuntu   Ready    control-plane   37d   v1.28.3   10.203.0.7    <none>   
 
 如图显示：
 
-![image-20231203224014415](/Users/zwliu/liuzhenwei/云原生/cloudnative-developer/image-20231203224014415.png)
+![image-20231203224014415](./hack/img/image-20231203224014415.png)
 
 5，观察两个节点kubelet配置文件的差异，可以看到kubeadm已经将kubelet的`--container-runtime-endpoint`参数设置当前节点支持的container runtime。
 
