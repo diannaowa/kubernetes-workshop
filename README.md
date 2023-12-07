@@ -46,11 +46,13 @@ root@VM-0-7-ubuntu:~/kubernetes-workshop# make run WHAT=cmd/serviceA
 访问服务
 
 ```shell
-root@VM-0-7-ubuntu:~# curl http://127.0.0.1:8080/info
+liuzhenweideMacBook-Pro kubernetes-workshop % curl http://127.0.0.1:8080/info
 {"ServiceName":"serviceA","Version":"","Hostname":"liuzhenweideMacBook-Pro.local"}
 ```
 
 #### 编译二进制
+
+`注：以下示例命令在一台X86_64的Linux服务器上执行`
 
 可以通过`make all WHAT=XXX`编译指定的service，`WHAT`为服务路径。如下命令，表示编译serviceA服务，编译后的二进制文件在`./bin/cmd/`目录中。
 
