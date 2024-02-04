@@ -236,3 +236,20 @@ ingress-nginx-controller             LoadBalancer   10.100.54.47     <pending>  
 
 
 
+附：安装containerd后的配置修改，`SystemdCgroup = true`，否则会造成容器无法启动，如etcd启动失败。
+
+```yaml
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+  BinaryName = ""
+  CriuImagePath = ""
+  CriuPath = ""
+  CriuWorkPath = ""
+  IoGid = 0
+  IoUid = 0
+  NoNewKeyring = false
+  NoPivotRoot = false
+  Root = ""
+  ShimCgroup = ""
+  SystemdCgroup = true #......
+```
+
